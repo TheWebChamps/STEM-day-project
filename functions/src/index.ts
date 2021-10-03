@@ -7,7 +7,7 @@ import * as admin from "firebase-admin";
 
 admin.initializeApp();
 
-admin.auth().setCustomUserClaims("OiBUe32nRgZ9kCk5ZAwqjNoPQTj1", {
+admin.auth().setCustomUserClaims("vRfKtIAQNmcV5v5en3By8JK1jc33", {
   admin: true,
 });
 
@@ -15,15 +15,17 @@ export const newSignUp = functions.auth.user().onCreate((user) => {
   const data = {
     uid: user.uid,
     email: user.email,
+    photoURL: user.photoURL,
   };
-  return admin.firestore().doc("userSignUps/{email}").set(data);
+  return admin.firestore().doc(`userSignUps/${data.email}`).set(data);
 });
 
 export const deleteAccount = functions.auth.user().onDelete((user) => {
   const data = {
     uid: user.uid,
     email: user.email,
+    photoURL: user.photoURL,
     isDeleted: true,
   };
-  return admin.firestore().doc("userSignUps/{email}").set(data);
+  return admin.firestore().doc(`userSignUps/${data.email}`).set(data);
 });
