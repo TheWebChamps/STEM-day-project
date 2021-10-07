@@ -7,7 +7,7 @@
     "source": "functions"
   },
   "hosting": {
-    "public": " public",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -30,5 +30,11 @@
     "hosting": {
       "port": 5000
     }
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "firestore": {
+    "rules": "firestore.rules"
   }
 }
