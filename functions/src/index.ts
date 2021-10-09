@@ -29,3 +29,5 @@ export const deleteAccount = functions.auth.user().onDelete((user) => {
   };
   return admin.firestore().doc(`userSignUps/${data.email}`).set(data);
 });
+
+// Hello!
