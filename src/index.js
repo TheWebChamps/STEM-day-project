@@ -1,17 +1,16 @@
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
-  getIdTokenResult,
   signInWithPopup,
   GoogleAuthProvider,
   GithubAuthProvider,
+  TwitterAuthProvider,
+  onAuthStateChanged,
   signOut,
 } from "firebase/auth";
 import {
   getFirestore,
-  doc,
   onSnapshot,
-  setDoc,
   collection,
   query,
 } from "firebase/firestore";
@@ -32,12 +31,15 @@ const app = initializeApp(firebaseConfig);
 const perf = getPerformance(app);
 const analytics = getAnalytics(app);
 
+const info = document.getElementById("info");
 const login = document.getElementById("login");
 const loginGithub = document.getElementById("login-github");
+const twitterButton = document.getElementById("twitter");
 const logout = document.getElementById("logout");
 const deleteAccount = document.getElementById("deleteAccount");
 const provider = new GoogleAuthProvider();
 const github = new GithubAuthProvider();
+const twitter = new TwitterAuthProvider();
 
 const auth = getAuth();
 const db = getFirestore();
@@ -70,6 +72,32 @@ logout.addEventListener("click", () => {
     .catch((error) => {
       console.error(error);
     });
+});
+
+twitterButton.addEventListener("click", () => {
+  signInWithPopup(auth, twitter)
+  .then(() => {
+    console.log("Signed in with Twitter");
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+});
+
+onAuthStateChanged(auth, (user) => {
+  if(user) {
+    login.style.display = "none";
+    loginGithub.style.display = "none";
+    twitterButton.style.display = "none";
+    logout.style.display = "block";
+    info.innerHTML = `Greetings ${user.displayName}`;
+  } else {
+    login.style.display = "block";
+    loginGithub.style.display = "block";
+    twitterButton.style.display = "block";
+    logout.style.display = "none";
+    info.innerHTML = "";
+  }
 });
 
 const q = query(collection(db, "movies"));
