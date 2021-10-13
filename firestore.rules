@@ -5,7 +5,7 @@ service cloud.firestore {
       match /userSignUps/ {emailId} {
       	allow read, write: if false;
       }
-      match /movies/{movie} {
+      match /cities/{getTimestamp} {
       	allow read: if request.auth != null;
         allow write: if request.auth.token.admin == true;
       }
