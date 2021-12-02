@@ -17,6 +17,7 @@ import {
 
 import { getPerformance } from "firebase/performance";
 import { getAnalytics } from "firebase/analytics";
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCLtTnAVBuPzBL_dFK-ClbCHP2Dqp3gW4g",
@@ -28,8 +29,15 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
+initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider("6Le-IW4dAAAAALzT3aSMhpPh8VAL0tiguitwEedm")
+});
+
 const perf = getPerformance(app);
 const analytics = getAnalytics(app);
+
+
 
 const info = document.getElementById("info");
 const login = document.getElementById("login");
