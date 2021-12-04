@@ -18,7 +18,7 @@ export const newSignUp = functions.auth.user().onCreate((user) => {
     photoURL: user.photoURL,
     name: user.displayName,
   };
-  return admin.firestore().doc(`userSignUps/${data.name}`).set(data);
+  return admin.firestore().doc(`userSignUps/${data.email}`).set(data);
 });
 
 export const deleteAccount = functions.auth.user().onDelete((user) => {
@@ -29,7 +29,7 @@ export const deleteAccount = functions.auth.user().onDelete((user) => {
     name: user.displayName,
     isDeleted: true,
   };
-  return admin.firestore().doc(`userSignUps/${data.name}`).set(data);
+  return admin.firestore().doc(`userSignUps/${data.email}`).set(data);
 });
 
 // Hello!
